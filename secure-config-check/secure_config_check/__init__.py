@@ -1,0 +1,1 @@
+"""Read-only security configuration auditing for authorized Ubuntu systems."""

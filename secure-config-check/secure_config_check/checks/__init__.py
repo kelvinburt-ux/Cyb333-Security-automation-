@@ -1,0 +1,1 @@
+"""Read-only checks grouped by Ubuntu security configuration category."""
