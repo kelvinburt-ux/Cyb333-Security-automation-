@@ -1,0 +1,15 @@
+ secure-config-check/.gitignore                     |  13 [32m+++[m
+ secure-config-check/README.md                      | 101 [32m++++++++++[m[31m-----------[m
+ .../termsnap - 08-password-policy-tests-passed.png | Bin
+ .../termsnap - 09-firewall-tests-passed.png        | Bin
+ .../termsnap - 10-account-tests-passed.png         | Bin
+ .../screenshots}/termsnap - 12-auditor-commit.png  | Bin
+ .../screenshots}/termsnap - 16-cli-commit.png      | Bin
+ .../termsnap - 17-windows-safety-check.png         | Bin
+ .../screenshots}/termsnap - account commits.png    | Bin
+ ... - all 15 control funtions built and tested.png | Bin
+ .../termsnap - get.python versions.png             | Bin
+ .../screenshots}/termsnap -13-reporting-tests..png | Bin
+ .../termsnap- 07-ssh-control-tests-passed.png      | Bin
+ .../screenshots}/termsnap- Full test suite.png     | Bin
+ 14 files changed, 59 insertions(+), 55 deletions(-)
