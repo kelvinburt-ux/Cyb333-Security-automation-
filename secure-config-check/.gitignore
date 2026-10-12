@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+reports/*.json
+*.log
+.DS_Store
+Thumbs.db

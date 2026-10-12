@@ -8,8 +8,6 @@ A Python-based, read-only security auditing tool for Ubuntu 24.04 LTS. It evalua
 
 Core development is complete.
 
-This project is complete for the selected scope: 15 CIS-aligned checks, a command-line interface, console reporting, JSON reporting, and safe error handling are all implemented. The project’s automated test suite currently passes: 144 tests passed.
-
 The project is designed for read-only auditing of supported Ubuntu 24.04 systems, with sanitized output that avoids exposing usernames, password hashes, raw shadow records, and other sensitive values.
 
 ## Project Objectives
@@ -21,7 +19,7 @@ The project is designed for read-only auditing of supported Ubuntu 24.04 systems
 - Handle missing files, commands, and permission errors safely.
 - Support repeatable testing and future security-audit improvements.
 
-## Features
+## Key Features
 
 - Runs 15 read-only Ubuntu security configuration checks.
 - Covers file permissions, SSH, password policies, firewall settings, and account configuration.
@@ -32,7 +30,7 @@ The project is designed for read-only auditing of supported Ubuntu 24.04 systems
 - Blocks execution on unsupported operating systems.
 - Includes 144 automated tests covering normal, insecure, malformed, missing, and denied inputs.
 
-## Prerequisites
+## Supported Environment and Prerequisites
 
 Before running Secure Config Check, confirm that you have:
 
@@ -69,9 +67,15 @@ python -m pip install --upgrade pip
 python -m pip install pytest
 ```
 
-## Running the Auditor
+## How to Run the Automated Tests
 
 The automated tests can run on Windows or Ubuntu. The actual security audit only runs on Ubuntu 24.04 LTS.
+
+```bash
+python -m pytest -q
+```
+
+## How to Run the Security Audit
 
 Display the help menu:
 
@@ -79,13 +83,21 @@ Display the help menu:
 python -m secure_config_check.cli --help
 ```
 
-The CLI supports a JSON output option:
+Run the audit on a supported Ubuntu 24.04 host:
+
+```bash
+python -m secure_config_check.cli
+```
+
+## How to Generate the JSON Report
 
 ```bash
 python -m secure_config_check.cli --json-output reports/ubuntu-audit.json
 ```
 
-## Control Catalog
+This writes the project metadata, benchmark information, summary totals, and all 15 ordered control results to the selected JSON file.
+
+## List of All 15 Controls
 
 The project uses a fixed 15-control registry in the current code. The catalog below matches the IDs, categories, and titles defined in the implementation.
 
@@ -107,7 +119,7 @@ The project uses a fixed 15-control registry in the current code. The catalog be
 | 14 | 7.2.1 | Account configuration | Accounts use shadowed passwords |
 | 15 | 7.2.2 | Account configuration | Shadow password fields are not empty |
 
-## Beginner-Friendly Project Architecture
+## Project Architecture and Repository Structure
 
 The project is intentionally small and easy to follow:
 
@@ -120,39 +132,7 @@ The project is intentionally small and easy to follow:
 
 If you are new to the codebase, start with the CLI entry point, then follow the audit flow into each category module and the reporting layer.
 
-## Console and JSON Usage Examples
-
-These examples reflect the actual CLI in the project code:
-
-### Console example
-
-```bash
-python -m secure_config_check.cli
-```
-
-This runs the audit on a supported Ubuntu 24.04 host and prints a full console report, including the control ID, category, title, status, and summary.
-
-### JSON example
-
-```bash
-python -m secure_config_check.cli --json-output reports/ubuntu-audit.json
-```
-
-The JSON output is written to the provided path and includes the project metadata, benchmark information, summary totals, and all 15 ordered control results.
-
-### Unsupported environment example
-
-```bash
-python -m secure_config_check.cli
-```
-
-On unsupported systems, the CLI exits safely with an unsupported-environment message instead of running the audit. In the current implementation, this is the exact message shown when the host is not Ubuntu 24.04:
-
-```text
-Unsupported operating system. Secure Config Check requires Ubuntu Linux 24.04 LTS.
-```
-
-## Live Ubuntu Audit Results
+## Ubuntu Audit Results
 
 The project’s live Ubuntu audit record shows the following results for the 15 included controls:
 
@@ -166,7 +146,26 @@ The project’s live Ubuntu audit record shows the following results for the 15 
 
 This summary reflects the project’s documented Ubuntu assessment and is the report used for the final audit evidence.
 
-## Safety, Privacy, and Project Limitations
+## Explanation of FAIL versus ERROR
+
+- `FAIL` means a control was checked and the current setting does not meet the expected requirement.
+- `ERROR` means the check could not be completed safely because the needed file, command, service, or permission state was unavailable or uncertain.
+- `PASS` means the control meets the expected requirement.
+- `NOT_APPLICABLE` means the control does not apply in the current environment.
+
+The project’s CLI explicitly treats `ERROR` as higher priority than `FAIL` when returning the process exit code.
+
+## Screenshots and Project Evidence
+
+The project documentation can include screenshot evidence in the following locations:
+
+![Console report placeholder](docs/screenshots/termsnap- Full%20test%20suite.png)
+
+![JSON output placeholder](docs/screenshots/termsnap%20-%2016-cli-commit.png)
+
+![Audit summary placeholder](docs/screenshots/termsnap%20-%20all%2015%20control%20funtions%20built%20and%20tested.png)
+
+## Safety, Privacy, and Limitations
 
 - The tool is read-only. It does not modify configuration files or remediation settings.
 - The tool is designed to run only on Ubuntu Linux 24.04 LTS and blocks other platforms.
@@ -177,16 +176,6 @@ This summary reflects the project’s documented Ubuntu assessment and is the re
 - The project does not perform remote scanning or automatic remediation.
 - The output is dependent on local permissions and the availability of the relevant system files and services.
 
-## Screenshot Placeholders
-
-The project documentation can include screenshot evidence in the following locations:
-
-![Console report placeholder](docs/screenshots/console-report.png)
-
-![JSON output placeholder](docs/screenshots/json-output.png)
-
-![Audit summary placeholder](docs/screenshots/audit-summary.png)
-
 ## Future Improvements
 
 - Expand the control set beyond the current 15 selected checks.
@@ -195,8 +184,10 @@ The project documentation can include screenshot evidence in the following locat
 - Add optional integration with CI pipelines and repeatable lab workflows.
 - Extend documentation with more example reports and troubleshooting notes.
 
-## Project Scope and Review
+## AI-Assisted Development Disclosure
 
-This project focuses on a fixed, read-only set of Ubuntu 24.04 security checks for a student lab environment. It is built to be safe, transparent, and repeatable while remaining intentionally limited to the controls defined in the current codebase.
+This project was developed with AI-assisted coding support during the implementation and documentation process. The final technical content, command usage, and project scope were verified against the current repository code and tests before being retained in the documentation.
 
-The project is CIS-aligned and is not CIS-certified.
+## License or Academic-Use Note
+
+This repository is intended for academic study, security learning, and demonstration of a read-only Linux configuration audit workflow. It is not a commercial product, a formal CIS certification artifact, or a production security assessment tool.
